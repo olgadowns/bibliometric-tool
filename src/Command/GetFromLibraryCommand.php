@@ -66,37 +66,35 @@ class GetFromLibraryCommand extends Command
         for ($year = $start_year; $year <= $stop_year; $year++)
         {
             $io->out('<info>Getting data for ' . $year . '</info>');
-            for ($month = $start_month; $month <= 12; $month++)
-            {
+            for ($month = $start_month; $month <= 12; $month++) {
 
-                if ($year == date("Y") && $month > date("m"))
-                {
+                if ($year == date("Y") && $month > date("m")) {
                     break;
                 }
 
                 $io->out("    <info>Month: $month</info>");
 
                 //Get the first result
-                $data = $this->getJCUData($query, 1, $year, $month, $content_type);
+                $data = $this->getJCUData($query, 1, $year, $month,1, $content_type);
 
                 //Save this request
                 file_put_contents("/Users/william/OneDrive - HM & W Harrington/PHD/Software/scraping-working-dir/$year-$month-01-1.json", $data);
 
                 $decoded_data = json_decode($data);
 
-                if (property_exists($decoded_data, 'error'))
-                {
+                if (property_exists($decoded_data, 'error')) {
                     continue;
                 }
 
                 $total_pages = $decoded_data->page_count;
 
-                for ($currnet_page = 2; $currnet_page <= $total_pages; $currnet_page++)
-                {
-                    $data = $this->getJCUData($query, $currnet_page, $year, $month, $content_type);
+                for ($currnet_page = 2; $currnet_page <= $total_pages; $currnet_page++) {
+                    $data = $this->getJCUData($query, $currnet_page, $year, $month, 1, $content_type);
                     file_put_contents("/Users/william/OneDrive - HM & W Harrington/PHD/Software/scraping-working-dir/$year-$month-01-$currnet_page.json", $data);
                     echo ".";
                 }
+
+
 
                 //debug ($data);
                 //die();
@@ -114,9 +112,10 @@ class GetFromLibraryCommand extends Command
 
     }
 
-    private function getJCUData($query, $page, $year, $month, $content_type)
+    private function getJCUData($query, $page, $year, $month, $day, $content_type)
     {
         $month = str_pad(strval($month), 2, '0',  STR_PAD_LEFT);
+        $day = str_pad(strval($day), 2, '0',  STR_PAD_LEFT);
 
         $url = "https://jcu.summon.serialssolutions.com/api/search?screen_res=W885H821&__refererURL=&pn=$page&ho=t&fvf%5B%5D=ContentType%2C$content_type%2Cf&rf=PublicationDate%2C$year-$month-01%3A$year-$month-31&l=en-AU&q=$query";
 
