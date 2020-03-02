@@ -1,0 +1,17 @@
+branch-defaults:
+  master:
+    environment: phd-env
+
+global:
+  application_name: phd
+  default_ec2_keyname: null
+  default_region: ap-southeast-2
+  profile: eb-cli
+  sc: git
+
+packages:
+  yum:
+    php-pdo: []
+    php-curl: []
+    php-gd: []
+    liberation-sans-fonts: []
