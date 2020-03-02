@@ -52,6 +52,7 @@ class ImportCommand extends Command
 
       $files = array_diff(scandir($directory), array('..', '.'));
 
+      //$files = ['2016-3-5.json'];
 
       foreach ($files as $filename)
       {
@@ -60,6 +61,11 @@ class ImportCommand extends Command
           echo ("Processing: $filename\r\n" );
 
           $contents = file_get_contents($args->getArgumentAt(0) . "/" . $filename);
+
+          if ($contents == "")
+          {
+            continue;
+          }
 
           $data = json_decode($contents);
 

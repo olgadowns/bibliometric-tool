@@ -17,6 +17,17 @@
 
 <div class="row">
     <div class="column">
+        <h4>Details</h4>
+        Date:   <?= $paper->publication_date->format('F Y'); ?>
+        <br/>
+        Type:   <?= $paper->content_type->content_type ?>
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="column">
         <h4>Authors</h4>
               <ul>
                 <?php foreach ($paper->Authors as $author) {

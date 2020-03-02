@@ -42,7 +42,20 @@ class Paper extends Entity
      * @var array
      */
 
-     public function _getAuthors()
+    public function _getContentType()
+    {
+
+        $contentTypeTable = TableRegistry::getTableLocator()->get('ContentTypes');
+
+        $ct = $contentTypeTable->find()->where(['id' => $this->content_type_id])->first();
+
+        return $ct;
+        //return $authorsTable->find()->where([''])
+
+    }
+
+
+    public function _getAuthors()
      {
        $authorsTable = TableRegistry::getTableLocator()->get('Authors');
        $authorsPapersTable = TableRegistry::getTableLocator()->get('AuthorsPapers');
