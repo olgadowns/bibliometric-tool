@@ -82,14 +82,23 @@ class GetFromLibraryCommand extends Command
 
                 $decoded_data = json_decode($data);
 
-                if (property_exists($decoded_data, 'error')) {
-                    continue;
-                }
-
                 $total_pages = $decoded_data->page_count;
 
+                if ($total_pages > 50)
+                {
+                    $io->out('<warning>Too many results, getting the first 50 pages</warning>');
+                }
+
                 for ($currnet_page = 2; $currnet_page <= $total_pages; $currnet_page++) {
+
                     $data = $this->getJCUData($query, $currnet_page, $year, $month, 1, $content_type);
+
+                    $decoded_data = json_decode($data);
+
+                    if (property_exists($decoded_data, 'error')) {
+                        break;
+                    }
+
                     file_put_contents("/Users/william/OneDrive - HM & W Harrington/PHD/Software/scraping-working-dir/$year-$month-01-$currnet_page.json", $data);
                     echo ".";
                 }
