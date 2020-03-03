@@ -86,7 +86,7 @@ class GetFromLibraryCommand extends Command
 
                 if ($total_pages > 50)
                 {
-                    $io->out('<warning>Too many results, getting the first 50 pages</warning>');
+                    $io->out('<warning>   Too many results, getting the first 50 pages</warning>');
                 }
 
                 for ($currnet_page = 2; $currnet_page <= $total_pages; $currnet_page++) {

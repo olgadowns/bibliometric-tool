@@ -43,6 +43,7 @@ $cakeDescription = 'William Harrington - Systematic Literature Review Project';
             <a href="/"><span>William </span>Harrington</a>
         </div>
         <div class="top-nav-links">
+            <a href="/queries">Queries</a>
             <a href="/papers">Papers</a>
             <a href="/authors">Authors</a>
             <a href="/keywords">Key Words</a>

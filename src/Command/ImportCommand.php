@@ -238,7 +238,7 @@ class ImportCommand extends Command
 
 
                     $result = $papersTable->save($new_paper);
-                    debug ($new_paper);
+                    //debug ($new_paper);
 
                     //Add the PapersQuery
                     $pq = $papersQuerysTable->newEntity([

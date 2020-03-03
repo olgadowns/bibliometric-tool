@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Query Entity
@@ -28,6 +29,46 @@ class Query extends Entity
      *
      * @var array
      */
+
+    public function _getPapers()
+    {
+        $queriesTable = TableRegistry::getTableLocator()->get('Queries');
+        $queryPapersTable = TableRegistry::getTableLocator()->get('PapersQueries');
+
+        $query_ids = $queryPapersTable->find()->where(['query_id' => $this->id]);
+        //debug ($author_ids);
+
+        $papers = [];
+
+        foreach ($query_ids as $id) {
+
+            $as = $queriesTable->find()->where(['id' => $id->query_id])->first();
+
+            array_push($papers,
+                [
+                    'id' => $as->id,
+                    'title' => $as->title,
+                ]);
+
+        }
+
+        return $papers;
+        //return $authorsTable->find()->where([''])
+
+    }
+
+    public function _getTotalPapers()
+    {
+
+        $queryPapersTable = TableRegistry::getTableLocator()->get('PapersQueries');
+
+        $keyword_ids = $queryPapersTable->find()->where(['query_id' => $this->id])->count();
+
+        return $keyword_ids;
+
+    }
+
+
     protected $_accessible = [
         'query' => true,
         'number_of_results' => true,
