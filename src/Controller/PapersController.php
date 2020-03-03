@@ -20,6 +20,7 @@ use Cake\Core\Configure;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
+use Cake\ORM\TableRegistry;
 use Cake\View\Exception\MissingTemplateException;
 
 /**
@@ -45,6 +46,22 @@ class PapersController extends AppController
      */
 
 
+     public function keep($id)
+     {
+         $paper = $this->Papers->findById($id)->first();
+         $paper->include = 1;
+         $this->Papers->save($paper);
+         return $this->redirect("/papers/view");
+     }
+
+    public function hide($id)
+    {
+        $paper = $this->Papers->findById($id)->first();
+        $paper->include = 0;
+        $this->Papers->save($paper);
+        return $this->redirect("/papers/view");
+    }
+
      public function index()
      {
          // Paginate the ORM table.
@@ -56,9 +73,19 @@ class PapersController extends AppController
 
      }
 
-     public function view($id)
+     public function view($id = "")
      {
-       $paper = $this->Papers->findById($id)->first();
-       $this->set('paper', $paper);
+
+         if ($id == "")
+         {
+             //Get the first paper that has include = 3
+
+             $paper = $this->Papers->findByInclude(3)->first();
+             $this->set('paper', $paper);
+         }
+         else {
+             $paper = $this->Papers->findById($id)->first();
+             $this->set('paper', $paper);
+         }
      }
 }

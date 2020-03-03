@@ -1,6 +1,6 @@
 <h1>Papers</h1>
 
-<h2><?= $paper->title ?> - (<?= $paper->publication_date ?>)</h2>
+<h2><?= $paper->title ?></h2>
 
 <?= $paper->abstract ?>
 
@@ -8,8 +8,8 @@
 <br/>
 
 <center>
-  <button class="button button-outline">Yes Keep</button>
-  <input class="button button-clear" type="submit" value="No, exclude">
+  <a href="/papers/keep/<?=$paper->id?>"><button class="button button-outline">Yes Keep</button></a>
+    <a href="/papers/hide/<?=$paper->id?>"><input class="button button-clear" type="submit" value="No, exclude"></a>
 </center>
 
 <br/>

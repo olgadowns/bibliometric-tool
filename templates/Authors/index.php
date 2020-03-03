@@ -16,33 +16,14 @@
   <?php endforeach; ?>
 </table>
 
+<br/>
 
-<?= $this->Paginator->numbers() ?>
+<ul class="pagination">
+    <li><?= $this->Paginator->prev('« Previous') ?></li>
+    <?= $this->Paginator->numbers() ?>
+    <li><?= $this->Paginator->next('Next »') ?></li>
+</ul>
 
-<?= $this->Paginator->prev('« Previous') ?>
-<?= $this->Paginator->next('Next »') ?>
-
-<?= $this->Paginator->counter() ?>
-
-
-<?php
-/*
-
-
-
-<table>
-  <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Total Papers</th>
-  </tr>
-     <?php foreach ($authors as $author): ?>
-  <tr>
-      <td><?= $author->id ?> </td>
-      <td><?= h($author->name) ?> </td>
-      <td><?= $author->TotalPapers ?> </td>
-
-  </tr>
-  <?php endforeach; ?>
-</table>
-*/ ?>
+<center>
+    <?= $this->Paginator->counter() ?>
+</center>

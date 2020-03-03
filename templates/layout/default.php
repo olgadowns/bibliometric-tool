@@ -36,6 +36,31 @@ $cakeDescription = 'William Harrington - Systematic Literature Review Project';
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+    <style>
+
+        .pagination {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+        .pagination .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
     <nav class="top-nav">
