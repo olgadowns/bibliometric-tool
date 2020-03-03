@@ -106,6 +106,34 @@ class Paper extends Entity
 
      }
 
+    public function _getQueries()
+    {
+        $queriesTable = TableRegistry::getTableLocator()->get('Queries');
+        $apersQueriesTable = TableRegistry::getTableLocator()->get('PapersQueries');
+
+        $query_ids = $apersQueriesTable->find()->where(['paper_id' => $this->id]);
+
+        $queries = [];
+
+        foreach ($query_ids as $id) {
+
+            $as = $queriesTable->find()->where(['id' => $id->query_id])->first();
+
+            array_push($queries,
+                [
+                    'id' => $as->id,
+                    'query' => $as->query,
+                ]);
+
+        }
+
+
+
+        return $queries;
+        //return $authorsTable->find()->where([''])
+
+    }
+
 
     protected $_accessible = [
         'title' => true,

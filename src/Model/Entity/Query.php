@@ -32,23 +32,31 @@ class Query extends Entity
 
     public function _getPapers()
     {
-        $queriesTable = TableRegistry::getTableLocator()->get('Queries');
+        $papersTable = TableRegistry::getTableLocator()->get('Papers');
         $queryPapersTable = TableRegistry::getTableLocator()->get('PapersQueries');
 
-        $query_ids = $queryPapersTable->find()->where(['query_id' => $this->id]);
+        $paper_ids = $queryPapersTable->find()->where(['query_id' => $this->id]);
         //debug ($author_ids);
 
         $papers = [];
 
-        foreach ($query_ids as $id) {
+        foreach ($paper_ids as $id) {
 
-            $as = $queriesTable->find()->where(['id' => $id->query_id])->first();
+            $as = $papersTable->find()->where(['id' => $id->paper_id])->first();
+
+            //debug ($as);
 
             array_push($papers,
                 [
                     'id' => $as->id,
                     'title' => $as->title,
                 ]);
+
+            if (sizeof($papers) > 100)
+            {
+                return $papers;
+            }
+
 
         }
 

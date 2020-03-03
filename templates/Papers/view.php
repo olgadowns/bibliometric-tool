@@ -18,11 +18,26 @@
 <div class="row">
     <div class="column">
         <h4>Details</h4>
-        Date:   <?= $paper->publication_date->format('F Y'); ?>
+        <?= $paper->content_type->content_type ?>
         <br/>
-        Type:   <?= $paper->content_type->content_type ?>
+        Published <?= $paper->publication_date->format('F Y'); ?>
     </div>
+
+    <div class="column">
+        <h4>Queries</h4>
+        <ul>
+            <?php foreach ($paper->Queries as $query) {
+                ?>
+                <li class="bullet success"><a href="/queries/view/<?= $query['id'] ?>"><?= $query['query'] ?></a></li>
+                <?php
+            }
+            ?>
+
+        </ul>
+    </div>
+
 </div>
+
 
 <br/>
 
