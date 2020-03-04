@@ -54,6 +54,27 @@ class Paper extends Entity
 
     }
 
+    public function _getDetails()
+    {
+
+        $paperDetailsTable = TableRegistry::getTableLocator()->get('PaperDetails');
+
+        if ($paperDetailsTable->find()->where(['paper_id' => $this->id])->count() == 0)
+        {
+            return $paperDetailsTable->newEntity([
+                'paper_id' => $this->id,
+                'methodology' => 'Not Checked',
+                'bias_score' => '-1',
+                'rating' => '-1',
+                'updated' => '-1',
+            ]);
+        }
+        else {
+            return $paperDetailsTable->find()->where(['paper_id' => $this->id])->first();
+        }
+
+    }
+
 
     public function _getAuthors()
      {
@@ -148,6 +169,7 @@ class Paper extends Entity
         'pqid' => true,
         'ssid' => true,
         'publication_date' => true,
+        'publication' => true,
         'include' => true,
         'rating' => true,
         'language' => true,

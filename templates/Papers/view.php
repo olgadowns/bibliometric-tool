@@ -19,6 +19,8 @@
         <h4>Details</h4>
         <?= $paper->content_type->content_type ?>
         <br/>
+        <?= $paper->publication; ?>
+        <br/>
         Published <?= $paper->publication_date->format('F Y'); ?>
     </div>
 
@@ -41,35 +43,60 @@
 <br/>
 
 <h4>Notes</h4>
-<form action="/paper/update/<?= $paper->id?>" method="post">
-<textarea id="notes"></textarea>
+<?php echo $this->Form->create($paper->Details, [
+        'url' => "/papers/update/" . $paper->id,
+        'type' => 'POST'
+]); ?>
+
+<?= $this->Form->textarea('notes', ['value' => $paper->Details->notes]); ?>
+
+<?= $this->Form->hidden('id', ['value' => $paper->Details->id]); ?>
+<?= $this->Form->hidden('paper_id', ['value' => $paper->id]); ?>
+<?= $this->Form->hidden('paper_title', ['value' => $paper->title]); ?>
 
 <div class="row">
     <div class="column">
-        <label for="bias">Methodology</label>
-        <select id="bias">
-            <option value="Mixed Methods">Mixed Methods</option>
-            <option value="Quantitative">Quantitative</option>
-            <option value="Qualitative">Qualitative</option>
-            <option value="Other">Other</option>
-        </select>
+        <label for="bias_score">Bias</label>
+        <?php
+        $bias = [
+            '-1' => 'Not Checked',
+            '1' => 'No obvious bias, methodology sound',
+            '2' => 'Possible bias, be careful',
+            '3' => 'Obvious bias, dont use',
+            '4' => 'Other',
+
+        ];
+        echo $this->Form->select('bias_score', $bias, ['default' => '-1']);
+        ?>
     </div>
+
     <div class="column">
-        <label for="bias">Bias</label>
-        <select id="bias">
-            <option value="0">No Bias, methodology sound</option>
-            <option value="1">Possible bias, be carefull</option>
-            <option value="3">Obvious bias, dont use</option>
-        </select>
+        <label for="rating">Methodology</label>
+        <?php
+        $methodology = [
+            '-1' => 'Not Checked',
+            '1' => 'Mixed Methods',
+            '2' => 'Quantitative',
+            '3' => 'Qualitative',
+            '4' => 'Other',
+        ];
+        echo $this->Form->select('methodology', $methodology, ['default' => '-1']);
+        ?>
     </div>
     <div class="column">
         <label for="rating">Rating</label>
-        <select id="rating">
-            <option value="0">0 - No Value</option>
-            <option value="1">1 - Interesting, not relevant</option>
-            <option value="2">3 - Contains reference or idea I want to use</option>
-            <option value="3">MUST USE</option>
-        </select>
+        <?php
+        $ratings = [
+            '-1' => 'Not checked',
+            '1' => '1 - Of no Values',
+            '2' => '2 - Interesting, not relevant',
+            '3' => '3 - Contains reference or idea I want to use',
+            '4' => '4 - MUST USE',
+            '5' => '0 - Other',
+
+        ];
+        echo $this->Form->select('rating', $ratings, ['default' => '-1']);
+        ?>
     </div>
     <div class="column">
         <br/>
@@ -77,7 +104,7 @@
         <button class="button button-outline" type="submit" style="width: 200px">Save</button>
     </div>
 </div>
-</form>
+<?php echo $this->Form->end(); ?>
 
 <br/>
 
@@ -105,4 +132,33 @@
                 ?>
               </ul>
     </div>
+</div>
+
+<br/>
+<br/>
+
+<div class="row">
+    <div class="column">
+        <h4>Article Details</h4>
+        <br/>
+        DOI: &nbsp;&nbsp;&nbsp; <?= $paper->doi; ?>
+        <br/>
+        ISSN:&nbsp;&nbsp;&nbsp; <?= $paper->issn; ?>
+        <br/>
+        EISSN: <?= $paper->eissn; ?>
+    </div>
+
+    <div class="column">
+        <h4>Queries</h4>
+        <ul>
+            <?php foreach ($paper->Queries as $query) {
+                ?>
+                <li class="bullet success"><a href="/queries/view/<?= $query['id'] ?>"><?= $query['query'] ?></a></li>
+                <?php
+            }
+            ?>
+
+        </ul>
+    </div>
+
 </div>

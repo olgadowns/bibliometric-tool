@@ -173,6 +173,7 @@ class ImportCommand extends Command
                       'url' => $paper->fulltext_link,
 
                       'publication_date' => $date,
+                      'publication' => $paper->publication_title,
                       'content_type_id' => $ct->id,
                       'language' => $paper->languages[0],
                       'include' => 3,

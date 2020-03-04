@@ -88,4 +88,36 @@ class PapersController extends AppController
              $this->set('paper', $paper);
          }
      }
+
+     public function update($paper_id)
+    {
+        $this->autoRender = false;
+
+        debug ($this->request->getData());
+
+        $paperDetailsTable = TableRegistry::getTableLocator()->get('PaperDetails');
+
+        $detailsEntity = $paperDetailsTable->find()->where(['paper_id' => $this->request->getData()['paper_id']])->first();
+
+        if ($detailsEntity != null)
+        {
+//            debug ("Patch");
+            //Patch
+            $entity = $paperDetailsTable->patchEntity($detailsEntity, $this->request->getData());
+            $result = $paperDetailsTable->save($entity);
+//            debug ($result);
+        }
+        else
+        {
+//            debug ("Creating");
+            $entity = $paperDetailsTable->newEntity($this->request->getData());
+            $result = $paperDetailsTable->save($entity);
+//            debug ($entity);
+        }
+
+        return ($this->redirect("/papers"));
+
+
+        //debug ($this->request->getData());
+    }
 }

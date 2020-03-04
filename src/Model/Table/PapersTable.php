@@ -84,6 +84,12 @@ class PapersTable extends Table
             ->notEmptyString('title');
 
         $validator
+            ->scalar('publication')
+            ->maxLength('publication', 16777215)
+            ->requirePresence('publication', 'create')
+            ->notEmptyString('publication');
+
+        $validator
             ->scalar('abstract')
             ->maxLength('abstract', 4294967295)
             ->requirePresence('abstract', 'create')
