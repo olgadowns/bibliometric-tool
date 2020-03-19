@@ -48,7 +48,8 @@ class ImportCommand extends Command
       $io->out("You can exit with <info>`CTRL-C`</info> or <info>`exit`</info>");
       $io->out('');
 
-      $directory = $args->getArgumentAt(0);
+      //$directory = $args->getArgumentAt(0);
+      $directory = "/Users/william/OneDrive - HM & W Harrington/PHD/Software/scraping-working-dir/";
 
       $files = array_diff(scandir($directory), array('..', '.'));
 
@@ -60,7 +61,7 @@ class ImportCommand extends Command
         {
           echo ("Processing: $filename\r\n" );
 
-          $contents = file_get_contents($args->getArgumentAt(0) . "/" . $filename);
+          $contents = file_get_contents($directory . "/" . $filename);
 
           if ($contents == "")
           {
@@ -90,6 +91,9 @@ class ImportCommand extends Command
 
           $query = $queriesTable->find()->where(['query' => $query_text])->first();
 
+          $duplicates = 0;
+          $total_duplicates = 0;
+          $total_imported = 0;
           //debug ($query);
 
           if ($query == null)
@@ -132,7 +136,7 @@ class ImportCommand extends Command
 
               if ($db_paper == null)
               {
-
+                  $total_imported++;
                   //Get the content type
                   $ct = $contentTypeTable->find()->where(['content_type' => $paper->content_type])->first();
 
@@ -168,10 +172,8 @@ class ImportCommand extends Command
                     //Paper doesnt exist
                     $new_paper = $papersTable->newEntity([
                       'title' => $paper->title,
-                      'title' => $paper->title,
                       'abstract' => $paper->abstracts[0]->abstract,
                       'url' => $paper->fulltext_link,
-
                       'publication_date' => $date,
                       'publication' => $paper->publication_title,
                       'content_type_id' => $ct->id,
@@ -179,6 +181,9 @@ class ImportCommand extends Command
                       'include' => 3,
                       'rating' => -1
                     ]);
+
+
+                    $total_imported++;
 
                     if ($paper->has_fulltext)
                     {
@@ -308,11 +313,17 @@ class ImportCommand extends Command
 
                     //debug ($result);
               }
+              else
+              {
+                  $duplicates++;
+                  $total_duplicates;;
+              }
             }
 
           }
 
-          echo "\r\n\r\nProcessed " . sizeof($papers) . " papers\r\n";
+            $io->out('<info>' . 'Processed ' . sizeof($papers) . " ( $duplicates Duplicates )</info>");
+          //echo "\r\n\r\nProcessed " . sizeof($papers) . " papers\r\n";
 
             /*if (!class_exists('Psy\Shell')) {
                 $io->err('<error>Unable to load Psy\Shell.</error>');
@@ -329,6 +340,10 @@ class ImportCommand extends Command
             }*/
           }
         }
+
+        $io->out("<info>Processed $total_imported ( $total_duplicates Duplicates )</info>");
+
+
 
         Log::drop('debug');
         Log::drop('error');

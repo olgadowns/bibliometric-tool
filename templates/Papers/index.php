@@ -7,6 +7,7 @@
     <tr>
         <th><?= $this->Paginator->sort('id', 'ID') ?></th>
         <th><?= $this->Paginator->sort('title', 'Title') ?></th>
+        <th><?= $this->Paginator->sort('Type', 'Type') ?></th>
     </tr>
        <?php foreach ($papers as $paper): ?>
     <tr>
@@ -22,7 +23,23 @@
             echo 'style="background-color: rgba(0, 255, 0, 0.1)"';
         }
 
-        ?>><?php if ($paper->include == 0) { echo '<strike>' ;} ?><a href="/papers/view/<?= $paper->id ?>"><?= h($paper->title) ?></a><?php if ($paper->include == 0) { echo '</strike>'; } ?></td>
+        ?>>
+            <?php if ($paper->include == 0) { echo '<strike>' ;} ?><a href="/papers/view/<?= $paper->id ?>"><?= h($paper->title) ?></a><?php if ($paper->include == 0) { echo '</strike>'; } ?>
+        </td>
+        <td <?php
+
+        if ($paper->include == 3)
+        {
+            echo 'style="background-color: rgba(255, 0, 0, 0.1)"';
+        }
+        else if ($paper->include == 1)
+        {
+            echo 'style="background-color: rgba(0, 255, 0, 0.1)"';
+        }
+
+        ?>>
+            <?= $paper->ContentType->content_type ?>
+        </td>
     </tr>
     <?php endforeach; ?>
 </table>
