@@ -89,9 +89,10 @@ class GetFromLibraryCommand extends Command
 
             $decoded_data = json_decode($data);
 
-            $total_pages = $decoded_data->record_count;
+            $total_pages = $decoded_data->page_count;
+            $total_results = $decoded_data->record_count;
 
-            $io->out("<warning>      Got $total_pages results </warning>");
+            $io->out("<warning>      Got $total_results results </warning>");
 
             if ($total_pages > 50) {
                 $io->out('<warning>      Too many results, getting the first 50 pages</warning>');
