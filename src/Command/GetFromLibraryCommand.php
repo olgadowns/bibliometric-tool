@@ -66,7 +66,6 @@ class GetFromLibraryCommand extends Command
             'Beef AND "Technology Adoption" AND "Internet connectivity"',
             'Beef AND "Technology Adoption" AND Broadband',
             'Beef AND "Technology Adoption" AND NBN',
-            'Graziers AND "Technology Adoption\" AND "Internet connectivity"',
             'Cropping AND "Technology Adoption" AND "Internet connectivity"',
             'Cropping AND "Technology Adoption" AND Broadband',
             'Cropping AND "Technology Adoption" AND NBN',
