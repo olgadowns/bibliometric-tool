@@ -124,6 +124,8 @@ class ImportCommand extends Command
           foreach ($papers as $paper) {
             //Does the paper exits?
 
+             // debug ($paper);
+
             if (sizeof($paper->abstracts) > 0)
             {
 
@@ -175,7 +177,7 @@ class ImportCommand extends Command
                       'abstract' => $paper->abstracts[0]->abstract,
                       'url' => $paper->fulltext_link,
                       'publication_date' => $date,
-                      'publication' => $paper->publication_title,
+
                       'content_type_id' => $ct->id,
                       'language' => $paper->languages[0],
                       'include' => 3,
@@ -184,6 +186,16 @@ class ImportCommand extends Command
 
 
                     $total_imported++;
+
+
+                   if (property_exists($paper, "publication_title"))
+                   {
+                       $new_paper->publication = $paper->publication_title;
+                   }
+                   else
+                   {
+                       $new_paper->publication = "None";
+                   }
 
                     if ($paper->has_fulltext)
                     {

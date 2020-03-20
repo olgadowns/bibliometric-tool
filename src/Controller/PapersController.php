@@ -81,6 +81,11 @@ class PapersController extends AppController
              //Get the first paper that has include = 3
 
              $paper = $this->Papers->findByInclude(3)->first();
+             if ($paper == null)
+             {
+                 return $this->redirect('/papers');
+             }
+
              $this->set('paper', $paper);
          }
          else {

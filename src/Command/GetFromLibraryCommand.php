@@ -66,12 +66,13 @@ class GetFromLibraryCommand extends Command
             'Beef AND "Technology Adoption" AND "Internet connectivity"',
             'Beef AND "Technology Adoption" AND Broadband',
             'Beef AND "Technology Adoption" AND NBN',
-            'Cropping AND "Technology Adoption\" AND "Internet connectivity"',
-            'Cropping AND "Technology Adoption\" AND Broadband',
-            'Cropping AND "Technology Adoption\" AND NBN',
             'Graziers AND "Technology Adoption\" AND "Internet connectivity"',
-            'Graziers AND "Technology Adoption\" AND Broadband',
-            'Graziers AND "Technology Adoption\" AND NBN'
+            'Cropping AND "Technology Adoption" AND "Internet connectivity"',
+            'Cropping AND "Technology Adoption" AND Broadband',
+            'Cropping AND "Technology Adoption" AND NBN',
+            'Graziers AND "Technology Adoption" AND "Internet connectivity"',
+            'Graziers AND "Technology Adoption" AND Broadband',
+            'Graziers AND "Technology Adoption" AND NBN'
         ];
 
 
@@ -98,6 +99,8 @@ class GetFromLibraryCommand extends Command
                 $io->out('<warning>      Too many results, getting the first 50 pages</warning>');
                 $io->out("   ");
             }
+
+            echo "     ";
 
             for ($currnet_page = 2; $currnet_page <= $total_pages; $currnet_page++) {
 
